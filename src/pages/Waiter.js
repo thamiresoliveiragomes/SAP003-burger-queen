@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 import firebase from '../utils/firebase';
 import Input from '../components/input'
 import Button from '../components/button'
-
+import Card from '../components/card'
 
 function Waiter () {
 	const [ menu, setMenu ] = useState([]);
 	const [ isBreakfast, setIsBreakfast ] = useState("breakfast");
+	
 
 	useEffect(() => {
 		firebase
@@ -23,20 +24,12 @@ function Waiter () {
 
 	const renderMenu = () => {
 		if (isBreakfast === 'breakfast') {
-			return menu.filter(item => item.type === 'breakfast').map(menu => 
-				<li key={menu.id}>
-					<div>
-					{menu.name} {menu.price}
-					</div>
-				</li>
+			return menu.filter(item => item.type === 'breakfast').map(menu =>
+				<Card id={menu.id} name={menu.name} price={menu.price}/>
 			)
 		} else {
 			return menu.filter(item => item.type === 'all day').map(menu => 
-				<li key={menu.id}>
-					<div>
-					{menu.name} {menu.price}
-					</div>
-				</li>
+				<Card id={menu.id} name={menu.name} price={menu.price}/>
 			)
 		}
 	}
@@ -62,9 +55,9 @@ function Waiter () {
 			<Button onClick={() => handleClick('all day')} title={'Almoço e jantar'}/>
 		</div>
 		<div>
-			<ol>
+			<ul>
 				{renderMenu()}
-			</ol>
+			</ul>
 		</div>
 		</>
 	);
