@@ -3,13 +3,11 @@ import Button from './button'
 
 function Order (props) {
   return (
-    <li key={props.id}>
+    <li>
       <div>
-      {props.quantity}
-      {props.name}
-      {props.price}
+      {props.quantity} {props.name} R${props.price}
       </div>
-      <Button title={'Excluir'}/>
+      <Button onClick={props.onClick} title={'Excluir'}/>
     </li>
   )
 }

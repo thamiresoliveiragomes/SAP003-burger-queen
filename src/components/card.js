@@ -5,9 +5,8 @@ function Card (props) {
   return (
     <li key={props.id}>
 			<div>
-			{props.name} R${props.price}
+			<Button onClick={props.onClick} title={[props.name, ' R$', props.price]}/>
 			</div>
-			<Button onClick={props.onClick} title={'Adicionar'}/>
 		</li>
   );
 };
