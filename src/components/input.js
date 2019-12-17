@@ -2,7 +2,10 @@ import React from 'react';
 
 function Input(props) {
   return (
-    <input type={props.type} className={props.class}/>
+    <div>
+      <label>{props.label}</label>
+      <input type={props.type} className={props.class} value={props.value} onChange={props.onChange}/>
+    </div>
   );
 }
 

@@ -15,7 +15,6 @@ function Waiter () {
 			.collection('menu')
 			.onSnapshot(snapshot => {
 				const menu = snapshot.docs.map(doc => ({
-					id: doc.id,
 					...doc.data()
 				}))
 				setMenu(menu)
@@ -24,12 +23,12 @@ function Waiter () {
 
 	const renderMenu = () => {
 		if (isBreakfast === 'breakfast') {
-			return menu.filter(item => item.type === 'breakfast').map(menu =>
-				<Card id={menu.id} name={menu.name} price={menu.price} onClick={() => addItem(menu)}/>
+			return menu.filter(item => item.type === 'breakfast').map((menu, index) =>
+				<Card key={index} name={menu.name} price={menu.price} onClick={() => addItem(menu)}/>
 			)
 		} else {
-			return menu.filter(item => item.type === 'all day').map(menu => 
-				<Card id={menu.id} name={menu.name} price={menu.price} onClick={() => addItem(menu)}/>
+			return menu.filter(item => item.type === 'all day').map((menu,index) => 
+				<Card key={index} name={menu.name} price={menu.price} onClick={() => addItem(menu)}/>
 			)
 		}
 	}
@@ -65,16 +64,37 @@ function Waiter () {
     }
 	}
 
+	const [client, setClient] = useState('');
+	const [table, setTable] = useState('')
+
+
+	function sendOrder(e) {
+		e.preventDefault()
+
+		firebase
+			.firestore()
+			.collection('order')
+			.add({
+				date: new Date(),
+				client,
+				table: Number(table),
+				order,
+				total
+			})
+			.then(
+				setClient(''),
+				setTable(''),
+				setOrder([]),
+				setTotal(0)
+			)
+	}
+
   return (
 		<>
 		<form>
 			<div>
-				<label>Nome:</label>
-				<Input type={'text'}/>
-			</div>
-			<div>
-				<label>Mesa:</label>
-				<Input type={'number'}/>
+				<Input label={'Nome:'} type={'text'} value={client} onChange={e => setClient(e.currentTarget.value)}/>
+				<Input label={'Mesa:'} type={'number'} value={table} onChange={e => setTable(e.currentTarget.value)}/>
 			</div>
 		</form>
 		<div>
@@ -87,10 +107,13 @@ function Waiter () {
 			</ul>
 		</div>
 		<div>
-			{order.map(item => 
-			<Order quantity={item.count} name={item.name} price={item.price} onClick={() => deleteItem(item) }/>
+			{order.map((item, index) => 
+			<Order key={index} quantity={item.count} name={item.name} price={item.price} onClick={() => deleteItem(item) }/>
 			)}
 			Total: R${total}
+		</div>
+		<div>
+			<Button onClick={sendOrder} title={'Enviar pedido'}/>
 		</div>
 		</>
 	);

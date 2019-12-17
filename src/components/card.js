@@ -3,7 +3,7 @@ import Button from './button'
 
 function Card (props) {
   return (
-    <li key={props.id}>
+    <li>
 			<div>
 			<Button onClick={props.onClick} title={[props.name, ' R$', props.price]}/>
 			</div>
