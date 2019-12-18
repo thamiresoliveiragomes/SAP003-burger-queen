@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from './button'
 
-function Order (props) {
+function OrderItens (props) {
   return (
     <li>
       <div>
@@ -12,4 +12,4 @@ function Order (props) {
   )
 }
 
-export default Order
+export default OrderItens
