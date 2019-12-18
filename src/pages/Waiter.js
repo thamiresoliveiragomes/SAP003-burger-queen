@@ -4,6 +4,7 @@ import Input from '../components/input'
 import Button from '../components/button'
 import Card from '../components/card'
 import OrderItens from '../components/order-itens'
+import OrderInPreparation from '../components/order-in-preparation'
 
 function Waiter () {
 	const [ menu, setMenu ] = useState([]);
@@ -80,7 +81,7 @@ function Waiter () {
 				table: Number(table),
 				order,
 				total,
-				status: 'in preparation'
+				status: 'Em preparação'
 			})
 			.then(
 				setClient(''),
@@ -90,8 +91,51 @@ function Waiter () {
 			)
 	}
 
+	const [ orderDone, setOrderDone ] = useState([]);
+
+  useEffect(() => {
+		firebase
+			.firestore()
+			.collection('order')
+			.onSnapshot(snapshot => {
+				const orderDone = snapshot.docs.map(doc => ({
+          id: doc.id,
+					...doc.data()
+				}))
+				setOrderDone(orderDone)
+			})
+  }, [])
+
+  const renderDoneOrder = () => {
+		return orderDone.filter(item => item.status === 'Pronto').map((item,index) =>
+			<OrderInPreparation key={index} id={item.id} client={item.client} table={item.table} 
+			status={item.status}
+			order={item.order.map(item => <div>{item.quantity} {item.name}</div>)}
+			title={'Pedido entregue'}
+			onClick={()=> orderFinished(item)}
+			/>
+		)
+	}
+
+	const orderFinished = (item) => {
+    const id = item.id
+    firebase
+      .firestore()
+      .collection('order')
+      .doc(id)
+      .update({
+        status: 'Concluido',
+      })
+    const index = order.indexOf(item)
+    orderDone.splice(index, 1)
+    setOrderDone([...orderDone])
+  }
+
   return (
 		<>
+		<h1>
+			Realizar pedido
+		</h1>
 		<form>
 			<div>
 				<Input label={'Nome:'} type={'text'} value={client} onChange={e => setClient(e.currentTarget.value)}/>
@@ -116,6 +160,12 @@ function Waiter () {
 		</div>
 		<div>
 			<Button onClick={sendOrder} title={'Enviar pedido'}/>
+		</div>
+		<h1>
+			Pedidos para Entrega
+		</h1>
+		<div>
+			{renderDoneOrder()}
 		</div>
 		</>
 	);

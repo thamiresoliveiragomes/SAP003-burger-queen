@@ -1,20 +1,17 @@
-import React from 'react'
-import Button from './button'
+import React from  'react'
 
 function OrderDone (props) {
-  return (
+    return (
     <li id={props.id}>
       <div>
         Cliente: {props.client} Mesa: {props.table}
       </div>
       <div>
         {props.order}
+        Status: {props.status}
       </div>
-      <div>
-        <Button onClick={props.onClick} title={'Pedido pronto'}/>
-      </div>
-    </li>
-  )
+  </li>
+    )
 }
 
 export default OrderDone

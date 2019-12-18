@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../utils/firebase';
+import OrderInPreparation from '../components/order-in-preparation'
 import OrderDone from '../components/order-done'
 
 function Kitchen () {
@@ -18,10 +19,13 @@ function Kitchen () {
 			})
   }, [])
 
-  const renderOrder = () => {
-		return order.filter(item => item.status === 'in preparation').map((item,index) =>
-      <OrderDone key={index} id={item.id} client={item.client} table={item.table} 
-      order={item.order.map(item => <div>{item.quantity} {item.name}</div>)} onClick={ ()=> orderDone(item)}/>
+  const renderInPreparationOrder = () => {
+		return order.filter(item => item.status === 'Em preparação').map((item,index) =>
+      <OrderInPreparation key={index} id={item.id} client={item.client} table={item.table} 
+      status={item.status}
+      order={item.order.map(item => <div>{item.quantity} {item.name}</div>)} 
+      title={'Pedido pronto'}
+      onClick={ ()=> orderDone(item)}/>
 		)
   }
   
@@ -32,22 +36,34 @@ function Kitchen () {
       .collection('order')
       .doc(id)
       .update({
-        status: 'done',
+        status: 'Pronto',
         dateEnd: new Date()
       })
     const index = order.indexOf(item)
     order.splice(index, 1)
     setOrder([...order])
+  }
 
+  const renderDoneOrder = () => {
+    return order.filter(item => item.status === 'Pronto').map((item,index) =>
+    <OrderDone key={index} id={item.id} client={item.client} table={item.table} status={item.status}
+    order={item.order.map(item => <div>{item.quantity} {item.name}</div>)} />
+    )
   }
 
   return (
     <>
     <h1>
-      Pedidos em Preparação
+      Pedidos em preparação
     </h1>
     <div>
-    {renderOrder()}
+      {renderInPreparationOrder()}
+    </div>
+    <h1>
+      Pedidos para entrega
+    </h1>
+    <div>
+      {renderDoneOrder()}
     </div>
     </>
   )
