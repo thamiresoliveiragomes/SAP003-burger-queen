@@ -5,7 +5,7 @@ function OrderItens (props) {
   return (
     <li>
       <div>
-      {props.quantity} {props.name} R${props.price}
+      {props.quantity} {props.name} {props.options} R${props.price}
       </div>
       <Button onClick={props.onClick} title={'Excluir'}/>
     </li>
