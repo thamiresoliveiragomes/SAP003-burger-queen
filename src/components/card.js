@@ -17,7 +17,8 @@ function Card (props) {
   }
 
   const handleSubmit = () => {
-    props.onClick({...props.menu, extras: extras, options: options})
+    props.onClick({...props.menu, extras, options})
+    setShowItem(false)
   }
 
   const renderExtrasAndOption = () => {
@@ -34,14 +35,14 @@ function Card (props) {
           )})
         }
         {
-          props.options.map(extra => (
+          props.options.map(option => (
             <>
-            <label>{extra}</label>
-            <input type="radio" value={extra} checked={options === extra} onClick={() => setOptions(extra)}/>
+            <label>{option}</label>
+            <input type="radio" value={option} checked={options === option} onClick={() => setOptions(option)}/>
             </>
             ))
         }
-        <Button onClick={handleSubmit} title="Enviar"/> 
+        <Button onClick={handleSubmit} title="Adicionar"/> 
         </>
       )
     } else {

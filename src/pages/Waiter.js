@@ -30,7 +30,8 @@ function Waiter () {
 			)
 		} else {
 			return menu.filter(item => item.type === 'all day').map((menu,index) => 
-				<Card key={index} menu={menu} extras={menu.extras} options={menu.options}  id={menu.id} name={menu.name} price={menu.price} onClick={addItem}/>
+				<Card key={index} menu={menu} extras={menu.extras} options={menu.options} 
+				id={menu.id} name={menu.name} price={menu.price} onClick={addItem}/>
 			)
 		}
 	}
@@ -153,7 +154,8 @@ function Waiter () {
 		</div>
 		<div>
 			{order.map((item, index) => 
-				<OrderItens key={index} quantity={item.quantity} options={item.options} name={item.name} price={item.price}
+				<OrderItens key={index} quantity={item.quantity}  name={item.name} 
+				options={item.options} extras={item.extras} price={item.price}
 				onClick={() => deleteItem(item) }/>
 			)}
 			Total: R${total}
