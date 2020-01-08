@@ -5,16 +5,19 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import './App.css';
 import Waiter from "./pages/Waiter";
 import Kitchen from "./pages/Kitchen";
+import { StyleSheet, css } from 'aphrodite';
 
 function App() {
   return (
     <Router>
       <div>
         <nav>
-          <ul>
+          <figure className={css(styles.img)}>
+            <img src={require('./img/logo.png')} alt='logo' className={css(styles.logo)}/>
+          </figure>
+          <ul className={css(styles.ul)}>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -38,5 +41,23 @@ function App() {
     </Router>
   );
 }
+
+const styles = StyleSheet.create({
+	ul: {
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0,
+    display: 'flex',
+		justifyContent: 'space-around'
+  },
+  logo: {
+    width: '20%',
+  },
+  img: {
+    display: 'flex',
+		justifyContent: 'center'
+  }
+})
+
 
 export default App;

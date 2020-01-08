@@ -25,24 +25,28 @@ function Card (props) {
     if (showItem) {
       return (
         <>
+        <div>
+        {
+          props.options.map(option => (
+            <>
+            <input type="radio" value={option} checked={options === option} onClick={() => setOptions(option)}/>
+            <label>{option}</label>
+            </>
+            ))
+        }
+        </div>
+        <div>
         {
           props.extras.map(extra => {
             return (
           <>
-          <label>{extra}</label>
           <input type="checkbox" checked={extras.indexOf(extra) !== -1} onClick={() => handleExtra(extra)}/>
+          <label>{extra} (+ R$1)</label>
           </>
           )})
         }
-        {
-          props.options.map(option => (
-            <>
-            <label>{option}</label>
-            <input type="radio" value={option} checked={options === option} onClick={() => setOptions(option)}/>
-            </>
-            ))
-        }
         <Button onClick={handleSubmit} title="Adicionar"/> 
+        </div>
         </>
       )
     } else {

@@ -5,6 +5,7 @@ import Button from '../components/button'
 import Card from '../components/card'
 import OrderItens from '../components/order-itens'
 import OrderInPreparation from '../components/order-in-preparation'
+import { StyleSheet, css } from 'aphrodite';
 
 function Waiter () {
 	const [ menu, setMenu ] = useState([]);
@@ -44,6 +45,9 @@ function Waiter () {
 	const [ total, setTotal ] = useState(0)
 
 	const addItem = (item) => {
+		if(item.extras){
+			item.price = item.price + item.extras.length
+		}
 		if(!order.includes(item)){
 			item.quantity = 1
 			setOrder([...order, item ])
@@ -137,31 +141,37 @@ function Waiter () {
 		<h1>
 			Realizar pedido
 		</h1>
-		<form>
+		<div className={css(styles.order)}>
+		<div>
 			<div>
-				<Input label={'Nome:'} type={'text'} value={client} onChange={e => setClient(e.currentTarget.value)}/>
-				<Input label={'Mesa:'} type={'number'} value={table} onChange={e => setTable(e.currentTarget.value)}/>
+				<Button onClick={() => handleClick('breakfast')} title={'Café da manhã'} className={css(styles.btn)}/>
+				<Button onClick={() => handleClick('all day')} title={'Almoço e jantar'}/>
 			</div>
-		</form>
-		<div>
-			<Button onClick={() => handleClick('breakfast')} title={'Café da manhã'}/>
-			<Button onClick={() => handleClick('all day')} title={'Almoço e jantar'}/>
+			<div className={css(styles.order)}>
+				<ul className={css(styles.ul)}>
+					{renderMenu()}
+				</ul>
+			</div>
 		</div>
 		<div>
-			<ul>
-				{renderMenu()}
-			</ul>
+			<form>
+				<div>
+					<Input label={'Nome:'} type={'text'} value={client} onChange={e => setClient(e.currentTarget.value)}/>
+					<Input label={'Mesa:'} type={'number'} value={table} onChange={e => setTable(e.currentTarget.value)}/>
+				</div>
+			</form>
+			<div>
+				{order.map((item, index) => 
+					<OrderItens key={index} quantity={item.quantity} name={item.name} 
+					options={item.options} extras={item.extras} price={item.price}
+					onClick={() => deleteItem(item) }/>
+				)}
+				Total: R${total}
+			</div>
+			<div>
+				<Button onClick={sendOrder} title={'Enviar pedido'}/>
+			</div>
 		</div>
-		<div>
-			{order.map((item, index) => 
-				<OrderItens key={index} quantity={item.quantity}  name={item.name} 
-				options={item.options} extras={item.extras} price={item.price}
-				onClick={() => deleteItem(item) }/>
-			)}
-			Total: R${total}
-		</div>
-		<div>
-			<Button onClick={sendOrder} title={'Enviar pedido'}/>
 		</div>
 		<h1>
 			Pedidos para Entrega
@@ -172,5 +182,17 @@ function Waiter () {
 		</>
 	);
 };
+
+const styles = StyleSheet.create({
+	order: {
+		display: 'flex',
+		justifyContent: 'center'
+	},
+	ul: {
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0,
+	},
+})
 
 export default Waiter
