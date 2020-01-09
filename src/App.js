@@ -13,23 +13,23 @@ function App() {
   return (
     <Router>
       <div>
-        <nav>
           <figure className={css(styles.img)}>
             <img src={require('./img/logo.png')} alt='logo' className={css(styles.logo)}/>
           </figure>
-          <ul className={css(styles.ul)}>
+        <Switch>
+        <Route exact path="/">
+        <nav>
+		  <ul className={css(styles.ul)}>
             <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/waiter">Salão</Link>
+              <Link to="/waiter">Salao</Link>
             </li>
             <li>
               <Link to="/kitchen">Cozinha</Link>
             </li>
           </ul>
+            <div>Home</div>
         </nav>
-        <Switch>
+          </Route>
           <Route path="/waiter">
             <Waiter />
           </Route>

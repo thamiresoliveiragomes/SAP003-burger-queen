@@ -6,6 +6,7 @@ import Card from '../components/card'
 import OrderItens from '../components/order-itens'
 import OrderInPreparation from '../components/order-in-preparation'
 import { StyleSheet, css } from 'aphrodite';
+import { Link } from "react-router-dom";
 
 function Waiter () {
 	const [ menu, setMenu ] = useState([]);
@@ -27,12 +28,18 @@ function Waiter () {
 	const renderMenu = () => {
 		if (isBreakfast === 'breakfast') {
 			return menu.filter(item => item.type === 'breakfast').map((menu, index) =>
-				<Card key={index} id={menu.id} name={menu.name} price={menu.price} onClick={() => addItem(menu)}/>
+				<Card key={index} id={menu.id} name={menu.name} price={menu.price} 
+				onClick={() => addItem(menu)} className={css(styles.btn, styles.center)} 
+				img={menu.img} classImg={css(styles.iconItem)}
+				/>
 			)
 		} else {
 			return menu.filter(item => item.type === 'all day').map((menu,index) => 
-				<Card key={index} menu={menu} extras={menu.extras} options={menu.options} 
-				id={menu.id} name={menu.name} price={menu.price} onClick={addItem}/>
+				<Card key={index} menu={menu} extras={menu.extras} options={menu.options}
+				id={menu.id} name={menu.name} price={menu.price} onClick={addItem}
+				className={css(styles.btn, styles.center)}
+				img={menu.img} classImg={css(styles.iconItem)}
+				/>
 			)
 		}
 	}
@@ -138,17 +145,27 @@ function Waiter () {
 
   return (
 		<>
-		<h1>
+		<nav>
+		  <ul className={css(styles.ul)}>
+            <li>
+              <Link to="/">Voltar</Link>
+            </li>
+          </ul>
+        </nav>
+		<h1 className={css(styles.title)}>
 			Realizar pedido
 		</h1>
-		<div className={css(styles.order)}>
 		<div>
-			<div>
-				<Button onClick={() => handleClick('breakfast')} title={'Café da manhã'} className={css(styles.btn)}/>
-				<Button onClick={() => handleClick('all day')} title={'Almoço e jantar'}/>
+			<div className={css(styles.center)}>
+				<Button onClick={() => handleClick('breakfast')} title={'Café da manhã'} 
+				className={css(styles.btn, styles.center)} 
+				img={require('../img/coffee.png')} classImg={css(styles.icon)}/>
+				<Button onClick={() => handleClick('all day')} title={'Almoço e jantar'} 
+				className={css(styles.btn, styles.center)} 
+				img={require('../img/lunch.png')} classImg={css(styles.icon)}/>
 			</div>
-			<div className={css(styles.order)}>
-				<ul className={css(styles.ul)}>
+			<div>
+				<ul className={css(styles.ul, styles.center)}>
 					{renderMenu()}
 				</ul>
 			</div>
@@ -156,8 +173,10 @@ function Waiter () {
 		<div>
 			<form>
 				<div>
-					<Input label={'Nome:'} type={'text'} value={client} onChange={e => setClient(e.currentTarget.value)}/>
-					<Input label={'Mesa:'} type={'number'} value={table} onChange={e => setTable(e.currentTarget.value)}/>
+					<Input label={'Nome:'} type={'text'} value={client}
+					onChange={e => setClient(e.currentTarget.value)}/>
+					<Input label={'Mesa:'} type={'number'} value={table}
+					onChange={e => setTable(e.currentTarget.value)}/>
 				</div>
 			</form>
 			<div>
@@ -172,7 +191,6 @@ function Waiter () {
 				<Button onClick={sendOrder} title={'Enviar pedido'}/>
 			</div>
 		</div>
-		</div>
 		<h1>
 			Pedidos para Entrega
 		</h1>
@@ -184,15 +202,41 @@ function Waiter () {
 };
 
 const styles = StyleSheet.create({
-	order: {
+	center: {
 		display: 'flex',
-		justifyContent: 'center'
+		justifyContent: 'center',
+	},
+	title: {
+		color: '#F9BC52',
+		textAlign: 'center',
 	},
 	ul: {
     listStyleType: 'none',
-    margin: 0,
-    padding: 0,
+    margin: '0',
+		padding: '0',
+		flexWrap: 'wrap',
+		alignItems: 'flex-start'
 	},
+	btn: {
+		background: 'none',
+		color: 'inherit',
+		border: 'none',
+		padding: '0',
+		font: 'inherit',
+		cursor: 'pointer',
+		outline: 'inherit',
+		width: '50%',
+		margin: '2% 0% 2% 0%',
+		flexDirection: 'column',
+		alignItems: 'center'
+	},
+	icon: {
+		width: '12%',
+	},
+	iconItem: {
+		width: '50%',
+		margin: '10%'
+	}
 })
 
 export default Waiter

@@ -2,7 +2,10 @@ import React from 'react';
 
 function Button (props) {
   return (
-  <button className={props.class} onClick={props.onClick}>{props.title}</button>
+  <button className={props.className} onClick={props.onClick}>
+    <img src={props.img} alt='' className={props.classImg}/>
+    {props.title}
+  </button>
   );
 };
 
