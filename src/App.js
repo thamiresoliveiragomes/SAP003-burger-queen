@@ -8,6 +8,7 @@ import {
 import Waiter from "./pages/Waiter";
 import Kitchen from "./pages/Kitchen";
 import { StyleSheet, css } from 'aphrodite';
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -17,18 +18,8 @@ function App() {
             <img src={require('./img/logo.png')} alt='logo' className={css(styles.logo)}/>
           </figure>
         <Switch>
-        <Route exact path="/">
-        <nav>
-		  <ul className={css(styles.ul)}>
-            <li>
-              <Link to="/waiter">Salao</Link>
-            </li>
-            <li>
-              <Link to="/kitchen">Cozinha</Link>
-            </li>
-          </ul>
-            <div>Home</div>
-        </nav>
+          <Route exact path="/">
+            <Home/>
           </Route>
           <Route path="/waiter">
             <Waiter />
@@ -51,7 +42,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around'
   },
   logo: {
-    width: '20%',
+    width: '17%',
   },
   img: {
     display: 'flex',

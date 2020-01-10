@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../utils/firebase';
-import Input from '../components/input'
-import Button from '../components/button'
-import Card from '../components/card'
-import OrderItens from '../components/order-itens'
-import OrderInPreparation from '../components/order-in-preparation'
+import Input from '../components/input';
+import Button from '../components/button';
+import Card from '../components/card';
+import OrderItens from '../components/order-itens';
+import OrderInPreparation from '../components/order-in-preparation';
+import Navbar from '../components/navbar'
 import { StyleSheet, css } from 'aphrodite';
-import { Link } from "react-router-dom";
 
 function Waiter () {
 	const [ menu, setMenu ] = useState([]);
@@ -145,16 +145,7 @@ function Waiter () {
 
   return (
 		<>
-		<nav>
-		  <ul className={css(styles.ul)}>
-            <li>
-              <Link to="/">Voltar</Link>
-            </li>
-          </ul>
-        </nav>
-		<h1 className={css(styles.title)}>
-			Realizar pedido
-		</h1>
+		<Navbar title={'Realizar pedido'}/>
 		<div>
 			<div className={css(styles.center)}>
 				<Button onClick={() => handleClick('breakfast')} title={'Café da manhã'} 
@@ -206,10 +197,6 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		justifyContent: 'center',
 	},
-	title: {
-		color: '#F9BC52',
-		textAlign: 'center',
-	},
 	ul: {
     listStyleType: 'none',
     margin: '0',
@@ -226,7 +213,7 @@ const styles = StyleSheet.create({
 		cursor: 'pointer',
 		outline: 'inherit',
 		width: '50%',
-		margin: '2% 0% 2% 0%',
+		margin: '2% 0 2% 0',
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
@@ -236,7 +223,7 @@ const styles = StyleSheet.create({
 	iconItem: {
 		width: '50%',
 		margin: '10%'
-	}
+	},
 })
 
 export default Waiter

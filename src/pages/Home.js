@@ -4,16 +4,19 @@ import { StyleSheet, css } from 'aphrodite';
 
 function Home() {
   return (
-    <nav>
-      <figure className={css(styles.img)}>
-        <img src={require('../img/queen1.png')} alt='logo' className={css(styles.logo)}/>
-      </figure>
-      <ul className={css(styles.ul)}>
+    <nav className={css(styles.nav)}>
+		  <ul className={css(styles.ul, styles.flex)}>
         <li>
-          <Link to="/waiter">Salão</Link>
+          <Link to="/waiter" className={css(styles.flex, styles.link)}>
+              <img src={require('../img/waiter.png')} alt='Salão' className={css(styles.icon)}/>
+              Salão
+          </Link>
         </li>
         <li>
-          <Link to="/kitchen">Cozinha</Link>
+          <Link to="/kitchen" className={css(styles.flex, styles.link)}>
+            <img src={require('../img/kitchen.png')} alt='Cozinha' className={css(styles.icon)}/>
+            Cozinha
+          </Link>
         </li>
       </ul>
     </nav>
@@ -23,17 +26,38 @@ function Home() {
 const styles = StyleSheet.create({
 	ul: {
     listStyleType: 'none',
-    margin: 0,
-    padding: 0,
+    margin: '0',
+    padding: '0',
+    '@media (max-width: 800px)': {
+      flexDirection: 'column',
+    }
+	},
+	icon: {
+    width: '45%',
+    backgroundColor: '#EFEAF1',
+    borderRadius: '50%',
+    border: '10px solid #F9BA2D',
+    margin: '3% 0 5% 0',
+    '@media (max-width: 800px)': {
+      width: '25%',
+    }
   },
-  logo: {
-    width: '25%',
+  nav: {
+    marginTop: '10%'
   },
-  img: {
+  flex: {
     display: 'flex',
-		justifyContent: 'center'
+  },
+  link: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    fontSize: '30px',
+    color: '#F9BA2D',
+    textDecoration: 'none',
+    '@media (max-width: 800px)': {
+      marginBottom: '10%',
+    }
   }
-  
 })
 
 

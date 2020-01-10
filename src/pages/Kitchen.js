@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../utils/firebase';
-import OrderInPreparation from '../components/order-in-preparation'
-import OrderDone from '../components/order-done'
+import OrderInPreparation from '../components/order-in-preparation';
+import OrderDone from '../components/order-done';
+import Navbar from '../components/navbar'
+import { StyleSheet, css } from 'aphrodite';
 
 function Kitchen () {
   const [ order, setOrder ] = useState([]);
@@ -53,9 +55,7 @@ function Kitchen () {
 
   return (
     <>
-    <h1>
-      Pedidos em preparação
-    </h1>
+		<Navbar title={'Pedidos Pendentes'}/>
     <div>
       {renderInPreparationOrder()}
     </div>
@@ -68,5 +68,13 @@ function Kitchen () {
     </>
   )
 }
+
+const styles = StyleSheet.create({
+	ul: {
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0,
+  }
+})
 
 export default Kitchen
