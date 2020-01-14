@@ -1,68 +1,108 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Burger Queen
 
-## Available Scripts
+## Índice
 
-In the project directory, you can run:
+* [1. Resumo do projeto](#1-resumo-do-projeto)
+* [2. Considerações gerais](#2-Considerações-gerais)
+* [3. Critérios de aceitação cumpridos pelo projeto](#3-critérios-de-aceitação-cumpridos-pelo-projeto)
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+***
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## 1. Resumo do projeto
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Nesse projeto foi criado uma interface para ser utilizada em _tablet_, onde é possível realizar pedidos, enviá-los para a cozinha para que sejam preparados e visualizar os pedidos pendentes para entrega.
 
-### `npm run build`
+Seguem as informações sobre o cliente:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> Somos **Burger Queen**, um fast food 24hrs.
+>
+>A nossa proposta de serviço 24 horas foi muito bem recebida e, para continuar a
+>crescer, precisamos de um sistema que nos ajude a receber pedidos de nossos
+>clientes.
+>
+>Nós temos 2 menus. Um muito simples para o café da manhã:
+>
+>| Ítem                      |Preço R$|
+>|---------------------------|------|
+>| Café americano            |    5 |
+>| Café com leite            |    7 |
+>| Misto Quente              |   10 |
+>| Suco de fruta natural     |    7 |
+>
+>E outro menu para o resto do dia:
+>
+>| Ítem                      |Preço |
+>|---------------------------|------|
+>|**Hambúrgueres**           |   **R$**   |
+>|Hambúrguer simples         |    10|
+>|Hambúrguer duplo           |    15|
+>|**Acompanhamentos**        |   **R$**   |
+>|Batata frita               |     5|
+>|Anéis de cebola            |     5|
+>|**Bebidas**                |   **R$**   |
+>|Água 500ml                 |     5|
+>|Água 750ml                 |     7|
+>|Refrigerante 500ml         |     7|
+>|Refrigerante 750ml         |    10|
+>
+>**Importante:** Os clientes podem escolher entre hambúrgueres de carne bovina,
+>frango ou vegetariano. Além disso, por um adicional de R$ 1,00 , eles podem
+>adicionar queijo ou ovo.
+>
+>Nossos clientes são bastante indecisos, por isso é muito comum que eles mudem o
+>seu pedido várias vezes antes de finalizar.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+A interface mostra os dois menus (café da manhã e restante do dia), cada
+um com todos os seus produtos. O usuário pode
+adicionar produtos e a interface mostra o _resumo do pedido_ com o custo total.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+O projeto pode ser acessado pelo link: https://burguer-queen-16772.firebaseapp.com/
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 2. Considerações Gerais
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A interface foi construida utilizando React Hooks, React Route, Aphrodite, Firebase,  e foi feita para rodar em **tablets**. O aplicativo é um _Single Page App_.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+O aplicativo utilizou scripts `npm-scripts` e teve `start`, `build` e `deploy`, que são responsáveis por iniciar, empacotar e implantar o aplicativo, respectivamente.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 3. Critérios de aceitação cumpridos pelo projeto
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### [História de usuário 1] Garçom/Garçonete deve poder anotar o seu pedido
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Eu como cliente quero poder anotar o meu pedido saber o valor de cada 
+produto e poder enviar o pedido para a cozinha para ser preparado.
 
-### Code Splitting
+##### Critérios de aceitação que foram atendidos.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+* Anotar o nome e mesa.
+* Adicionar produtos aos pedidos.
+* Excluir produtos.
+* Ver resumo e o total da compra.
+* Enviar o pedido para a cozinha (guardar em algum banco de dados).
+* Funcionar bem e se adequar a um _tablet_.
 
-### Analyzing the Bundle Size
+##### Definição de pronto
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+* Foram feitos _testes_ de usabilidade e incorporado o _feedback_ do usuário.
+* Foi feito o _deploy_ do aplicativo.
 
-### Making a Progressive Web App
+***
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+#### [História de usuário 2] Chefe de cozinha deve ver os pedidos
 
-### Advanced Configuration
+Eu como chefe de cozinha quero ver os pedidos dos clientes em ordem, poder marcar que estão prontos e poder notificar os garçons/garçonetes que o pedido está pronto para ser entregue ao cliente.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+##### Critérios de aceitação que foram atendidos
 
-### Deployment
+* Ver os pedidos à medida em que são feitos.
+* Marcar os pedidos que foram preparados e estão prontos para serem servidos.
+* Ver o tempo que levou para preparar o pedido desde que chegou, até ser marcado como concluído.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+##### Definição de pronto
 
-### `npm run build` fails to minify
+* Foram feitos _testes_ de usabilidade e incorporado o _feedback_ do usuário.
+* Foi feito o _deploy_ do aplicativo.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

@@ -9,13 +9,13 @@ function Home() {
         <li>
           <Link to="/waiter" className={css(styles.flex, styles.link)}>
               <img src={require('../img/waiter.png')} alt='Salão' className={css(styles.icon)}/>
-              Salão
+              SALÃO
           </Link>
         </li>
         <li>
           <Link to="/kitchen" className={css(styles.flex, styles.link)}>
             <img src={require('../img/kitchen.png')} alt='Cozinha' className={css(styles.icon)}/>
-            Cozinha
+            COZINHA
           </Link>
         </li>
       </ul>
