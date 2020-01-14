@@ -11,9 +11,6 @@ function Navbar (props) {
 					<img src={require('../img/back.png')} alt='voltar' className={css(styles.icon)}/>
 					</Link>
         </li>
-				<li>
-					<h1 className={css(styles.title)}>{props.title}</h1>
-				</li>
       </ul>
     </nav>
   );
@@ -28,10 +25,6 @@ const styles = StyleSheet.create({
 	icon: {
 		width: '5%',
 		marginLeft: '4%'
-	},
-	title: {
-		color: '#F9BA2D',
-		textAlign: 'center',
 	},
 })
 

@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react';
 import firebase from '../utils/firebase';
 import Input from '../components/input';
 import Button from '../components/button';
+import Menu from '../components/menu';
+import Order from '../components/order';
 import Card from '../components/card';
-import OrderItens from '../components/order-itens';
-import OrderInPreparation from '../components/order-in-preparation';
 import Navbar from '../components/navbar'
 import { StyleSheet, css } from 'aphrodite';
 
@@ -16,6 +16,7 @@ function Waiter () {
 		firebase
 			.firestore()
 			.collection('menu')
+			.orderBy("name", "asc")
 			.onSnapshot(snapshot => {
 				const menu = snapshot.docs.map(doc => ({
 					id: doc.id,
@@ -28,14 +29,14 @@ function Waiter () {
 	const renderMenu = () => {
 		if (isBreakfast === 'breakfast') {
 			return menu.filter(item => item.type === 'breakfast').map((menu, index) =>
-				<Card key={index} id={menu.id} name={menu.name} price={menu.price} 
+				<Menu key={index} id={menu.id} name={menu.name} price={menu.price} 
 				onClick={() => addItem(menu)} className={css(styles.btn, styles.center)} 
 				img={menu.img} classImg={css(styles.iconItem)}
 				/>
 			)
 		} else {
 			return menu.filter(item => item.type === 'all day').map((menu,index) => 
-				<Card key={index} menu={menu} extras={menu.extras} options={menu.options}
+				<Menu key={index} menu={menu} extras={menu.extras} options={menu.options}
 				id={menu.id} name={menu.name} price={menu.price} onClick={addItem}
 				className={css(styles.btn, styles.center)}
 				img={menu.img} classImg={css(styles.iconItem)}
@@ -88,7 +89,7 @@ function Waiter () {
 			.firestore()
 			.collection('order')
 			.add({
-				dateStart: new Date(),
+				dateStart: new Date().getTime(),
 				client,
 				table: Number(table),
 				order,
@@ -109,6 +110,7 @@ function Waiter () {
 		firebase
 			.firestore()
 			.collection('order')
+			.orderBy('dateEnd', 'asc')
 			.onSnapshot(snapshot => {
 				const orderDone = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -116,14 +118,26 @@ function Waiter () {
 				}))
 				setOrderDone(orderDone)
 			})
-  }, [])
+	}, []);
+	
+	const timestampToDate = (timestamp) => {
+		const hours = Math.floor(timestamp/60/60);
+		const minutes = Math.floor((timestamp - hours *60 *60)/60);
+		const seconds = Math.floor(timestamp -hours *60 *60 - minutes *60);
+		return (
+			<p>Tempo de Preparo: {hours}:{minutes}:{seconds}</p>
+		)
+	}
 
   const renderDoneOrder = () => {
 		return orderDone.filter(item => item.status === 'Pronto').map((item,index) =>
-			<OrderInPreparation key={index} id={item.id} client={item.client} table={item.table} 
-			status={item.status}
-			order={item.order.map(item => <div>{item.quantity} {item.name}</div>)}
-			title={'Pedido entregue'}
+			<Card key={index} id={item.id} client={item.client} table={item.table} 
+	    order={item.order.map(item => <p>{item.quantity}x {item.name} 
+			{item.options ? <div> ({item.options})</div> : false}
+			{item.extras ? item.extras.map(e=> <> +{e}</>) : false}</p>)}
+			time={timestampToDate((item.dateEnd - item.dateStart)/1000)}
+			total={item.total}
+			title={'PEDIDO ENTREGUE'}
 			onClick={()=> orderFinished(item)}
 			/>
 		)
@@ -146,7 +160,7 @@ function Waiter () {
   return (
 		<>
 		<Navbar title={'Realizar pedido'}/>
-		<div>
+		<section className={css(styles.menu)}>
 			<div className={css(styles.center)}>
 				<Button onClick={() => handleClick('breakfast')} title={'Café da manhã'} 
 				className={css(styles.btn, styles.center)} 
@@ -160,34 +174,32 @@ function Waiter () {
 					{renderMenu()}
 				</ul>
 			</div>
-		</div>
-		<div>
-			<form>
-				<div>
-					<Input label={'Nome:'} type={'text'} value={client}
-					onChange={e => setClient(e.currentTarget.value)}/>
-					<Input label={'Mesa:'} type={'number'} value={table}
-					onChange={e => setTable(e.currentTarget.value)}/>
-				</div>
+		</section>
+		<section>
+			<form className={css(styles.form)}>
+				<Input label={'Nome:'} type={'text'} value={client}
+				onChange={e => setClient(e.currentTarget.value)}
+				className={css(styles.inputName)}/>
+				<Input label={'Mesa:'} type={'number'} value={table}
+				onChange={e => setTable(e.currentTarget.value)}
+				className={css(styles.inputTable)}/>
 			</form>
-			<div>
+			<div className={css(styles.itens)}>
 				{order.map((item, index) => 
-					<OrderItens key={index} quantity={item.quantity} name={item.name} 
+					<Order key={index} quantity={item.quantity} name={item.name} 
 					options={item.options} extras={item.extras} price={item.price}
 					onClick={() => deleteItem(item) }/>
 				)}
-				Total: R${total}
-			</div>
-			<div>
+				<p>Total: R${total}</p>
 				<Button onClick={sendOrder} title={'Enviar pedido'}/>
 			</div>
-		</div>
-		<h1>
-			Pedidos para Entrega
-		</h1>
-		<div>
-			{renderDoneOrder()}
-		</div>
+		</section>
+		<section>
+			<h1 className={css(styles.title)}>Pedidos para Entrega</h1>
+			<div className={css(styles.order)}>
+				{renderDoneOrder()}
+			</div>
+		</section>
 		</>
 	);
 };
@@ -224,6 +236,31 @@ const styles = StyleSheet.create({
 		width: '50%',
 		margin: '10%'
 	},
+	form: {
+		display: 'flex',
+		justifyContent: 'space-evenly',
+	},
+	inputName: {
+		width: '100%'
+	},
+	inputTable: {
+		width: '40%',
+		height: '30%'
+	},
+	itens: {
+		marginLeft: '13%'
+	},
+	order: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
+		alignItems: 'baseline'
+	},
+	title: {
+		textAlign: 'center',
+		fontFamily: 'baloo',
+		color: '#F9BA2D'
+	}
 })
 
 export default Waiter

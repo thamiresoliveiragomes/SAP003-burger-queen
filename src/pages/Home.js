@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     }
   },
   nav: {
-    marginTop: '10%'
+    marginTop: '10%',
   },
   flex: {
     display: 'flex',
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
   link: {
     flexDirection: 'column',
     alignItems: 'center',
-    fontSize: '30px',
+    fontFamily: 'baloo',
+    fontSize: '40px',
     color: '#F9BA2D',
     textDecoration: 'none',
     '@media (max-width: 800px)': {

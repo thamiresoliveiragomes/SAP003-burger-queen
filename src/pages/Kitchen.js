@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../utils/firebase';
-import OrderInPreparation from '../components/order-in-preparation';
-import OrderDone from '../components/order-done';
+import Card from '../components/card';
 import Navbar from '../components/navbar'
 import { StyleSheet, css } from 'aphrodite';
 
@@ -11,7 +10,8 @@ function Kitchen () {
   useEffect(() => {
 		firebase
 			.firestore()
-			.collection('order')
+      .collection('order')
+      .orderBy('dateStart', 'asc')
 			.onSnapshot(snapshot => {
 				const order = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -23,10 +23,12 @@ function Kitchen () {
 
   const renderInPreparationOrder = () => {
 		return order.filter(item => item.status === 'Em preparação').map((item,index) =>
-      <OrderInPreparation key={index} id={item.id} client={item.client} table={item.table} 
-      status={item.status}
-      order={item.order.map(item => <div>{item.quantity} {item.name}</div>)} 
-      title={'Pedido pronto'}
+      <Card key={index} id={item.id} client={item.client} table={item.table} 
+      order={item.order.map(item => <p>{item.quantity}x {item.name} 
+      {item.options ? <div> ({item.options})</div> : false}
+      {item.extras ? item.extras.map(e=> <> +{e}</>) : false}</p>)}
+      total={item.total}
+      title={'PEDIDO PRONTO'}
       onClick={ ()=> orderDone(item)}/>
 		)
   }
@@ -39,42 +41,39 @@ function Kitchen () {
       .doc(id)
       .update({
         status: 'Pronto',
-        dateEnd: new Date()
+        dateEnd: new Date().getTime()
       })
     const index = order.indexOf(item)
     order.splice(index, 1)
     setOrder([...order])
   }
 
-  const renderDoneOrder = () => {
-    return order.filter(item => item.status === 'Pronto').map((item,index) =>
-    <OrderDone key={index} id={item.id} client={item.client} table={item.table} status={item.status}
-    order={item.order.map(item => <div>{item.quantity} {item.name}</div>)} />
-    )
-  }
-
   return (
     <>
-		<Navbar title={'Pedidos Pendentes'}/>
-    <div>
-      {renderInPreparationOrder()}
-    </div>
-    <h1>
-      Pedidos para entrega
-    </h1>
-    <div>
-      {renderDoneOrder()}
-    </div>
+		<Navbar/>
+    <section>
+			<h1 className={css(styles.title)}>Pedidos em preparação</h1>
+			<div className={css(styles.order)}>
+				{renderInPreparationOrder()}
+			</div>
+		</section>
     </>
   )
 }
 
 const styles = StyleSheet.create({
-	ul: {
-    listStyleType: 'none',
-    margin: 0,
-    padding: 0,
-  }
+	order: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
+		alignItems: 'baseline'
+	},
+	title: {
+    textAlign: 'center',
+    fontFamily: 'baloo',
+    marginTop: '0',
+    color: '#F9BA2D',
+	}
 })
 
 export default Kitchen

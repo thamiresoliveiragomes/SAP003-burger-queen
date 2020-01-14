@@ -1,17 +1,10 @@
-@font-face {
-  font-family: "insanibc";
-  src: url('./fonts/Insanibc.ttf');
-}
-
 body {
-  margin: 0;
-  font-family: "insanibc";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto';
   background-color: #6948A3;
   color: #EFEAF1;
   margin: 3%;
   list-style-type: none;
+  font-size: 20px;
 }
 
 /* #6948A3 roxo claro
