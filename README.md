@@ -106,3 +106,17 @@ Eu como chefe de cozinha quero ver os pedidos dos clientes em ordem, poder marca
 * Foram feitos _testes_ de usabilidade e incorporado o _feedback_ do usuário.
 * Foi feito o _deploy_ do aplicativo.
 
+#### [História de usuário 3] Garçom/Garçonete deve ver os pedidos prontos para servir
+
+Eu como garçom/garçonete quero ver os pedidos que estão prontos para entregá-los rapidamente aos clientes.
+
+##### Critérios de aceitação
+
+* Ver a lista de pedidos prontos para servir.
+* Marque os pedidos que foram entregues.
+
+##### Definição de pronto
+
+* Foram feitos _testes_ de usabilidade e incorporado o _feedback_ do usuário.
+* Foi feito o _deploy_ do aplicativo.
+* Os dados foram mantidos intactos, mesmo depois que um pedido foi terminado para ter estatísticas no futuro.
