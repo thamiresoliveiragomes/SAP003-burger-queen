@@ -5,10 +5,10 @@ import { StyleSheet, css } from 'aphrodite';
 function Home() {
   return (
     <nav className={css(styles.nav)}>
-		  <ul className={css(styles.ul, styles.flex)}>
+      <ul className={css(styles.ul, styles.flex)}>
         <li>
           <Link to="/waiter" className={css(styles.flex, styles.link)}>
-              <img src={require('../img/waiter.png')} alt='Salão' className={css(styles.icon)}/>
+            <img src={require('../img/waiter.png')} alt='Salão' className={css(styles.icon)}/>
               SALÃO
           </Link>
         </li>
@@ -24,15 +24,15 @@ function Home() {
 }
 
 const styles = StyleSheet.create({
-	ul: {
+  ul: {
     listStyleType: 'none',
     margin: '0',
     padding: '0',
     '@media (max-width: 800px)': {
       flexDirection: 'column',
     }
-	},
-	icon: {
+  },
+  icon: {
     width: '45%',
     backgroundColor: '#EFEAF1',
     borderRadius: '50%',
