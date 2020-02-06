@@ -71,6 +71,7 @@ function Waiter () {
 		if (item.quantity === 1){
 			const index = order.indexOf(item)
 			order.splice(index, 1)
+			// order.filter(item.name)
 			setOrder([...order])
 			setTotal(updateTotal)
 		} else {

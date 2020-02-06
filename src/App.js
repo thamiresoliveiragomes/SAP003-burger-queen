@@ -12,22 +12,20 @@ import Home from "./pages/Home";
 function App() {
   return (
     <Router>
-      <div>
-          <figure className={css(styles.img)}>
-            <img src={require('./img/logo.png')} alt='logo' className={css(styles.logo)}/>
-          </figure>
-        <Switch>
-          <Route exact path="/">
-            <Home/>
-          </Route>
-          <Route path="/waiter">
-            <Waiter />
-          </Route>
-          <Route path="/kitchen">
-            <Kitchen />
-          </Route>
-        </Switch>
-      </div>
+      <figure className={css(styles.img)}>
+        <img src={require('./img/logo.png')} alt='logo' className={css(styles.logo)}/>
+      </figure>
+      <Switch>
+        <Route exact path="/">
+          <Home/>
+        </Route>
+        <Route path="/waiter">
+          <Waiter />
+        </Route>
+        <Route path="/kitchen">
+          <Kitchen />
+        </Route>
+      </Switch>
     </Router>
   );
 }
