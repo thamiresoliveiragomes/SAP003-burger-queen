@@ -6,34 +6,34 @@ import { StyleSheet, css } from 'aphrodite';
 
 function Kitchen () {
   const [ order, setOrder ] = useState([]);
-	useEffect(() => {
-		firebase
-			.firestore()
+  useEffect(() => {
+    firebase
+      .firestore()
       .collection('order')
       .orderBy('dateStart', 'asc')
-			.onSnapshot(snapshot => {
-				const order = snapshot.docs.map(doc => ({
+      .onSnapshot(snapshot => {
+        const order = snapshot.docs.map(doc => ({
           id: doc.id,
-					...doc.data()
-				}))
-		setOrder(order)
-	})
+          ...doc.data()
+	}))
+	setOrder(order)
+  })
 }, [])
 
-  const renderInPreparationOrder = () => {
-		return order.filter(item => item.status === 'Em preparação').map((item,index) =>
-      <Card key={index} id={item.id} client={item.client} table={item.table} 
-      order={item.order.map(item => <p>{item.quantity}x {item.name} 
-      {item.options ? <div> ({item.options})</div> : false}
-      {item.extras ? item.extras.map(e=> <> +{e}</>) : false}</p>)}
-      total={item.total}
-      title={'PEDIDO PRONTO'}
-      onClick={ ()=> orderDone(item)}/>
-		)
-  }
+const renderInPreparationOrder = () => {
+  return order.filter(item => item.status === 'Em preparação').map((item,index) =>
+    <Card key={index} id={item.id} client={item.client} table={item.table} 
+    order={item.order.map(item => <p>{item.quantity}x {item.name} 
+    {item.options ? <div> ({item.options})</div> : false}
+    {item.extras ? item.extras.map(e=> <> +{e}</>) : false}</p>)}
+    total={item.total}
+    title={'PEDIDO PRONTO'}
+    onClick={ ()=> orderDone(item)}/>
+  )
+}
   
-  const orderDone = (item) => {
-    const id = item.id
+const orderDone = (item) => {
+  const id = item.id
     firebase
       .firestore()
       .collection('order')
@@ -45,34 +45,34 @@ function Kitchen () {
     const index = order.indexOf(item)
     order.splice(index, 1)
     setOrder([...order])
-  }
+}
 
-  return (
+return (
     <>
-		<Navbar/>
+    <Navbar/>
     <section>
-			<h1 className={css(styles.title)}>Pedidos em preparação</h1>
-			<div className={css(styles.order)}>
-				{renderInPreparationOrder()}
-			</div>
-		</section>
+      <h1 className={css(styles.title)}>Pedidos em preparação</h1>
+      <div className={css(styles.order)}>
+        {renderInPreparationOrder()}
+      </div>
+    </section>
     </>
   )
 }
 
 const styles = StyleSheet.create({
-	order: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'flex-start',
-		alignItems: 'baseline'
-	},
-	title: {
+  order: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'baseline'
+  },
+  title: {
     textAlign: 'center',
     fontFamily: 'baloo',
     marginTop: '0',
     color: '#F9BA2D',
-	}
+  }
 })
 
 export default Kitchen
