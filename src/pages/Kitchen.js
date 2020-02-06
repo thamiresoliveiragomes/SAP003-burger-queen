@@ -6,8 +6,7 @@ import { StyleSheet, css } from 'aphrodite';
 
 function Kitchen () {
   const [ order, setOrder ] = useState([]);
-
-  useEffect(() => {
+	useEffect(() => {
 		firebase
 			.firestore()
       .collection('order')
@@ -17,9 +16,9 @@ function Kitchen () {
           id: doc.id,
 					...doc.data()
 				}))
-				setOrder(order)
-			})
-  }, [])
+			setOrder(order)
+	})
+}, [])
 
   const renderInPreparationOrder = () => {
 		return order.filter(item => item.status === 'Em preparação').map((item,index) =>
