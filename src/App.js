@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   logo: {
-    width: '17%',
+    width: '13%',
   },
   img: {
     display: 'flex',

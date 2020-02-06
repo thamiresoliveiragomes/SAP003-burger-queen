@@ -155,7 +155,7 @@ function Waiter () {
     <>
       <Navbar title={'Realizar pedido'}/>
       <section className={css(styles.menu)}>
-        <div className={css(styles.center)}>
+        <div className={css(styles.center, styles.line)}>
           <Button onClick={() => handleClick('breakfast')} title={'Café da manhã'} 
           className={css(styles.btn, styles.center)} 
           img={require('../img/coffee.png')} classImg={css(styles.icon)}/>
@@ -164,12 +164,12 @@ function Waiter () {
           img={require('../img/lunch.png')} classImg={css(styles.icon)}/>
         </div>
         <div>
-          <ul className={css(styles.ul, styles.center)}>
+          <ul className={css(styles.ul, styles.center, styles.margin)}>
             {renderMenu()}
           </ul>
         </div>
       </section>
-      <section>
+      <section className={css(styles.order)}>
         <form className={css(styles.form)}>
           <Input label={'Nome:'} type={'text'} value={client}
           onChange={e => setClient(e.currentTarget.value)}
@@ -185,12 +185,12 @@ function Waiter () {
             onClick={() => deleteItem(item) }/>
           )}
           <p>Total: R${total}</p>
-          <Button onClick={sendOrder} title={'Enviar pedido'}/>
+          <Button onClick={sendOrder} title={'Enviar pedido'} className={css(styles.btnSend)}/>
         </div>
       </section>
       <section>
         <h1 className={css(styles.title)}>Pedidos para Entrega</h1>
-        <div className={css(styles.order)}>
+        <div className={css(styles.card)}>
           {renderDoneOrder()}
         </div>
       </section>
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   itens: {
     marginLeft: '13%'
   },
-  order: {
+  card: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
@@ -254,6 +254,28 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'baloo',
     color: '#F9BA2D'
+  },
+  btnSend: {
+    backgroundColor: '#F9BA2D',
+    border: 'none',
+    textAlign: 'center',
+    textDecoration: 'none',
+    color: '#513184',
+    padding: '1%',
+    fontFamily: 'baloo',
+    fontSize: '18px',
+    width: '30%'
+  },
+  order: {
+    padding: '5% 2%',
+    borderTop: '1px solid #F9BA2D',
+    borderBottom: '1px solid #F9BA2D'
+  },
+  line: {
+    borderBottom: '1px solid #F9BA2D'
+  },
+  margin: {
+    margin: '2%'
   }
 })
 
