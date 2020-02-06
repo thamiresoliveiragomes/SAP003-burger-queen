@@ -27,35 +27,32 @@ function Menu (props) {
       return (
         <>
         <div>
-        {
-          props.options.map(option => (
+          {props.options.map(option => (
             <div>
-            <input type="radio" value={option} checked={options === option} 
-            onClick={() => setOptions(option)}/>
-            <label>{option}</label>
+              <input type="radio" value={option} checked={options === option} 
+              onClick={() => setOptions(option)}/>
+              <label>{option}</label>
             </div>
-            ))
-        }
+          ))}
         </div>
         <div> 
-        {
-          props.extras.map(extra => {
+          {props.extras.map(extra => {
             return (
-          <div>
-          <input type="checkbox" checked={extras.indexOf(extra) !== -1} 
-          onClick={() => handleExtra(extra)}/>
-          <label>{extra} (+ R$1)</label>
-          </div>
-          )})
-        }
-        <Button onClick={handleSubmit} title="Adicionar"/> 
+              <div>
+                <input type="checkbox" checked={extras.indexOf(extra) !== -1} 
+                onClick={() => handleExtra(extra)}/>
+                <label>{extra} (+ R$1)</label>
+              </div>
+            )
+          })}
+          <Button onClick={handleSubmit} title="Adicionar"/> 
         </div>
         </>
       )
     } else {
       return null;
     }
-  }
+  };
 
   return (
     <li id={props.id} className={css(styles.menu)}>
@@ -63,19 +60,19 @@ function Menu (props) {
       title={[props.name, ' R$', props.price]} 
       className={props.className} img={props.img} classImg={props.classImg}/> 
       {renderExtrasAndOption()}
-		</li>
+    </li>
   );
 };
 
 const styles = StyleSheet.create({
   menu: {
-		display: 'flex',
-		justifyContent: 'center',
+    display: 'flex',
+    justifyContent: 'center',
     width: '25%',
     marginBottom: '4%',
     flexDirection: 'column',
     alignItems: 'center'
-	}
+  }
 })
 
 export default Menu

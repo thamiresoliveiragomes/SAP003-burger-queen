@@ -15,39 +15,39 @@ function Kitchen () {
         const order = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-	}))
-	setOrder(order)
-  })
-}, [])
-
-const renderInPreparationOrder = () => {
-  return order.filter(item => item.status === 'Em preparação').map((item,index) =>
-    <Card key={index} id={item.id} client={item.client} table={item.table} 
-    order={item.order.map(item => <p>{item.quantity}x {item.name} 
-    {item.options ? <div> ({item.options})</div> : false}
-    {item.extras ? item.extras.map(e=> <> +{e}</>) : false}</p>)}
-    total={item.total}
-    title={'PEDIDO PRONTO'}
-    onClick={ ()=> orderDone(item)}/>
-  )
-}
-  
-const orderDone = (item) => {
-  const id = item.id
-    firebase
-      .firestore()
-      .collection('order')
-      .doc(id)
-      .update({
-        status: 'Pronto',
-        dateEnd: new Date().getTime()
+        }))
+        setOrder(order)
       })
+  }, [])
+
+  const renderInPreparationOrder = () => {
+    return order.filter(item => item.status === 'Em preparação').map((item,index) =>
+      <Card key={index} id={item.id} client={item.client} table={item.table} 
+      order={item.order.map(item => <p>{item.quantity}x {item.name} 
+      {item.options ? <div> ({item.options})</div> : false}
+      {item.extras ? item.extras.map(e=> <> +{e}</>) : false}</p>)}
+      total={item.total}
+      title={'PEDIDO PRONTO'}
+      onClick={ ()=> orderDone(item)}/>
+    )
+  }
+  
+  const orderDone = (item) => {
+    const id = item.id
+      firebase
+        .firestore()
+        .collection('order')
+        .doc(id)
+        .update({
+          status: 'Pronto',
+          dateEnd: new Date().getTime()
+        })
     const index = order.indexOf(item)
     order.splice(index, 1)
     setOrder([...order])
-}
+  }
 
-return (
+  return (
     <>
     <Navbar/>
     <section>
@@ -58,7 +58,7 @@ return (
     </section>
     </>
   )
-}
+};
 
 const styles = StyleSheet.create({
   order: {

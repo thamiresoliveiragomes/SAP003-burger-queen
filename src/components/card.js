@@ -5,15 +5,15 @@ import { StyleSheet, css } from 'aphrodite'
 function Card (props) {
   return (
     <li id={props.id} className={css(style.order)}>
-        <p className={css(style.itens)}>Cliente: {props.client}</p>
-        <p className={css(style.itens)}>Mesa: {props.table}</p>
-        <p className={css(style.itens)}>{props.order}</p>
-        <p className={css(style.itens)}>Total: R${props.total}</p>
-        <p className={css(style.itens)}>{props.time}</p>
-        <Button onClick={props.onClick} title={props.title} className={css(style.btn)}/>
+      <p className={css(style.itens)}>Cliente: {props.client}</p>
+      <p className={css(style.itens)}>Mesa: {props.table}</p>
+      <p className={css(style.itens)}>{props.order}</p>
+      <p className={css(style.itens)}>Total: R${props.total}</p>
+      <p className={css(style.itens)}>{props.time}</p>
+      <Button onClick={props.onClick} title={props.title} className={css(style.btn)}/>
     </li>
   )
-}
+};
 
 const style = StyleSheet.create({
   order: {

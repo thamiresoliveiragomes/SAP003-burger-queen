@@ -11,16 +11,16 @@ function Order (props) {
       img={require('../img/delete.png')} classImg={css(styles.icon)}/>
     </li>
   )
-}
+};
 
 const styles = StyleSheet.create({
   btn: {
-		background: 'none',
-		color: 'inherit',
-		border: 'none',
-		padding: '0',
-		font: 'inherit',
-		cursor: 'pointer',
+    background: 'none',
+    color: 'inherit',
+    border: 'none',
+    padding: '0',
+    font: 'inherit',
+    cursor: 'pointer',
     outline: 'inherit',
     width: '10%',
   },

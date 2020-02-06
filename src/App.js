@@ -28,22 +28,22 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
 const styles = StyleSheet.create({
-	ul: {
+  ul: {
     listStyleType: 'none',
     margin: 0,
     padding: 0,
     display: 'flex',
-		justifyContent: 'space-around'
+    justifyContent: 'space-around'
   },
   logo: {
     width: '17%',
   },
   img: {
     display: 'flex',
-		justifyContent: 'center'
+    justifyContent: 'center'
   }
 })
 
