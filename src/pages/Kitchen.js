@@ -16,7 +16,7 @@ function Kitchen () {
           id: doc.id,
 					...doc.data()
 				}))
-			setOrder(order)
+		setOrder(order)
 	})
 }, [])
 
